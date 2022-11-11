@@ -4,8 +4,6 @@ const axios = require('axios')
 const HOST = 'localhost' // Change to actual host
 const cors = require('cors')
 const morgan = require('morgan')
-const monitor = require('./monitor.json')
-const fs = require('fs')
 const PORT = 3200 || process.env.PORT
 
 app.use(express.json())
@@ -16,7 +14,7 @@ app.use(morgan('dev'))
 app.get('/credito-tarjeta-:numero', (req, res) => {
     // send request to API-Bank
     const { numero } = req.params
-    const url = `http://localhost:5000/tarjeta/${numero}`
+    const url = `http://localhost:5000/tarjeta-${numero}`
     axios.get(url)
         .then(response => {
             const { credito } = response.data[0]
@@ -31,7 +29,7 @@ app.get('/credito-tarjeta-:numero', (req, res) => {
 app.get('/saldo-cuenta-:numero', (req, res) => {
     // send request to API-Bank
     const { numero } = req.params
-    const url = `http://localhost:5000/cuenta/${numero}`
+    const url = `http://localhost:5000/cuenta-${numero}`
     axios.get(url)
         .then(response => {
             const { saldo } = response.data[0]
