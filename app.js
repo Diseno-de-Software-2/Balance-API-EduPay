@@ -4,6 +4,8 @@ const axios = require('axios')
 const HOST = 'localhost' // Change to actual host
 const cors = require('cors')
 const morgan = require('morgan')
+var setTerminalTitle = require('set-terminal-title');
+setTerminalTitle('Balance service', { verbose: true });
 const PORT = 3200 || process.env.PORT
 
 app.use(express.json())
@@ -16,9 +18,14 @@ app.get('/credito-tarjeta-:numero', (req, res) => {
     const { numero } = req.params
     const url = `http://localhost:5000/tarjeta-${numero}`
     axios.get(url)
+
         .then(response => {
-            const { credito } = response.data[0]
-            res.json({ credito })
+            if (response.data == "Consultas deshabilitadas") {
+                res.send("Consultas deshabilitadas")
+            } else {
+                const { credito } = response.data[0]
+                res.json({ credito })
+            }
         })
         .catch(error => {
             console.log(error)
@@ -32,8 +39,12 @@ app.get('/saldo-cuenta-:numero', (req, res) => {
     const url = `http://localhost:5000/cuenta-${numero}`
     axios.get(url)
         .then(response => {
-            const { saldo } = response.data[0]
-            res.json({ saldo })
+            if (response.data == "Consultas deshabilitadas") {
+                res.send("Consultas deshabilitadas")
+            } else {
+                const { saldo } = response.data[0]
+                res.json({ saldo })
+            }
         })
         .catch(error => {
             console.log(error)
