@@ -2,7 +2,7 @@
 
 Esta es la API de balance para el proyecto EduPay.
 
-## How to run
+## Cómo se ejecuta
 
 Para ejecutar la API de balance, necesitas tener instalado [Node.js](https://nodejs.org/en/).
 
