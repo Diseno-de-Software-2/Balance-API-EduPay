@@ -4,9 +4,12 @@ const axios = require('axios')
 const HOST = 'localhost' // Change to actual host
 const cors = require('cors')
 const morgan = require('morgan')
+var portfinder = require('portfinder');
+portfinder.setBasePort(3200);
+portfinder.setHighestPort(3249);
 var setTerminalTitle = require('set-terminal-title');
 setTerminalTitle('Balance service', { verbose: true });
-const PORT = 3200 || process.env.PORT
+var PORT;
 
 app.use(express.json())
 app.use(cors())
@@ -51,22 +54,25 @@ app.get('/saldo-cuenta-:numero', (req, res) => {
         })
 })
 
-app.listen(PORT, async () => {
-    const response = await axios({
-        method: 'post',
-        url: `http://localhost:3000/register`,
-        headers: { 'Content-Type': 'application/json' },
-        data: {
-            apiName: "balance",
-            protocol: "http",
-            host: HOST,
-            port: PORT,
-        }
+portfinder.getPort(function (err, port) {
+    PORT = port;
+    app.listen(PORT, async () => {
+        const response = await axios({
+            method: 'post',
+            url: `http://localhost:3000/register`,
+            headers: { 'Content-Type': 'application/json' },
+            data: {
+                apiName: "balance",
+                protocol: "http",
+                host: HOST,
+                port: PORT,
+            }
+        })
+        await axios.post('http://localhost:3000/switch/balance', {
+            "url": "http://localhost:" + PORT,
+            "enabled": true
+        })
+        console.log(response.data)
+        console.log(`Query server listening on port ${PORT}`)
     })
-    await axios.post('http://localhost:3000/switch/balance', {
-        "url": "http://localhost:" + PORT,
-        "enabled": true
-    })
-    console.log(response.data)
-    console.log(`Query server listening on port ${PORT}`)
 })
