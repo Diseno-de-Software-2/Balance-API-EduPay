@@ -1,27 +1,85 @@
 # Balance API EduPay
 
-This is the balance API for the EduPay project.
+Esta es la API de balance para el proyecto EduPay.
 
-## How to run
+## Cómo se ejecuta
 
-To run the balance API, you need to have installed [Node.js](https://nodejs.org/en/).
+Para ejecutar la API de balance, necesitas tener instalado [Node.js](https://nodejs.org/en/).
 
-Then, you need to install the dependencies:
+A continuación, es necesario instalar las dependencias:
 
 ```bash
 npm install
 ```
 
-Remenber to run the database and the **API GATEWAY** before running the API.
+Recuerde ejecutar la base de datos y la **API GATEWAY** antes de ejecutar la API.
 
-Finally, you can run the balance API:
+Por último, puede ejecutar la API de saldo:
 
 ```bash
 npm run dev
 ```
 
-## Port
+## Puerto
 
-The balance API will be running on port 3200.
+La API de equilibrio se ejecutará en el puerto 3200.
 
-You can create instances by changing the port number in the app.js file and running the API again. The assign port must be between 3200 and 3249.
+Puedes crear instancias cambiando el número de puerto en el archivo app.js y ejecutando de nuevo la API. El puerto asignado debe estar entre 3200 y 3249.
+
+## Peticiones
+
+---
+
+### **Consultar credito de tarjeta**
+* **URL**
+
+  _/credito-tarjeta-:numero_
+
+* **Método:**
+  `GET`
+  
+*  **URL Params**
+
+   **Required:**
+ 
+   `numero=[integer]`
+
+* **Respuesta al éxito:**
+
+  * **Code:** 200 <br />
+    **Content:** `{ credito : 50000 }`
+  * **Code:** 200 <br />
+    **Content:** `Consultas deshabilitadas`
+ 
+* **Respuesta al error:**
+  * **Code:** 
+    **Content:** `{ error : ... }`
+---
+
+---
+
+### **Consultar saldo de cuenta**
+* **URL**
+
+  _/saldo-cuenta-:numero_
+
+* **Método:**
+  `GET`
+  
+*  **Parámetros de la URL**
+
+   **Requerido:**
+ 
+   `numero=[integer]`
+
+* **Respuesta al éxito:**
+
+  * **Code:** 200 <br />
+    **Content:** `{ credito : 50000 }`
+  * **Code:** 200 <br />
+    **Content:** `Consultas deshabilitadas`
+ 
+* **Respuesta al error:**
+  * **Code:** 
+    **Content:** `{ error : ... }`
+---
