@@ -23,8 +23,9 @@ app.get('/credito-tarjeta-:numero', (req, res) => {
     axios.get(url)
 
         .then(response => {
-            if (response.data == "Consultas deshabilitadas") {
-                res.send("Consultas deshabilitadas")
+            console.log(response.data)
+            if (response.data == 'Consultas deshabilitadas') {
+                return res.status(503).json({ message: 'consultas deshabilitadas por parte del banco', service: 'Consultas bancarias' })
             } else {
                 const { credito } = response.data[0]
                 res.json({ credito })
@@ -43,7 +44,7 @@ app.get('/saldo-cuenta-:numero', (req, res) => {
     axios.get(url)
         .then(response => {
             if (response.data == "Consultas deshabilitadas") {
-                res.send("Consultas deshabilitadas")
+                return res.status(503).json({ message: 'consultas deshabilitadas por parte del banco', service: 'Consultas bancarias' })
             } else {
                 const { saldo } = response.data[0]
                 res.json({ saldo })
